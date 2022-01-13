@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            comp1004 project
+        </title>
+    </head>
+    <body>
+        <h1>
+            yes
+        </h1>
+        <button id="btn1" onclick="btn1_press()">Bruh</button>
+    </body>
+</html>
+<script>
+    function btn1_press(){
+        var a = Math.floor(Math.random() * 255);
+        var b = Math.floor(Math.random() * 255);
+        var c = Math.floor(Math.random() * 255);
+        document.body.style.backgroundColor = "rgb(" + [a,b,c].join(',') + ")";
+    }
+</script>
