@@ -1,22 +1,128 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>
-            comp1004 project
-        </title>
-    </head>
-    <body>
-        <h1>
-            Comp1004 Project demo
-        </h1>
-        <button id="btn1" onclick="btn1_press()">Click Me</button>
-    </body>
+<html lang="en">
+<head>
+    <title>Page Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* Style the body */
+        body {
+            font-family: Arial;
+            margin: 0;
+        }
+
+        /* Header/Logo Title */
+        .header {
+            padding: 60px;
+            text-align: center;
+            background: #1abc9c;
+            color: white;
+            font-size: 30px;
+        }
+
+        /*Columns */
+        .column {
+            float: left;
+            width: 50%;
+            padding: 5px;
+            height: 402px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Page Content */
+        .content {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Comp1004 Project</h1>
+        <p>My project demo</p>
+    </div>
+
+    <div class="row">
+        <div class="column" style="background-color:#aaa;">
+            <h2>How My Demo Works</h2>
+            <p>When the "light" (represented by the screen) turns white and begins to fade red click the button to move onto next task</p>
+            <p>When the light is purple it is work time, when it is yellow it is break time</p>
+            <button id="btn1" onclick="btn1_press()">Button</button>
+        </div>
+    </div>
+
+</body>
 </html>
 <script>
-    function btn1_press(){
-        var a = Math.floor(Math.random() * 255);
-        var b = Math.floor(Math.random() * 255);
-        var c = Math.floor(Math.random() * 255);
-        document.body.style.backgroundColor = "rgb(" + [a,b,c].join(',') + ")";
+    var timer;
+    var R = 255,
+        G = 255,
+        B = 255;
+    var speed = 50;
+    var timerspeed = 50;
+    var break_time = false;
+    var count = 0;
+
+    function init() {
+        document.body.style.background = "rgb(" + [R, G, B].join(",") + ")";
+        timer = setInterval(changeColour, speed)
+    }
+
+    function changeColour() {
+        if (B <= 0) {
+            clearInterval(timer);
+        }
+        else {
+            B -= 1;
+            G -= 1;
+            document.body.style.background = "rgb(" + [R, G, B].join(",") + ")";
+        }
+    }
+
+    function countdown() {
+        timer = setInterval(changeTimer, timerspeed)
+    }
+
+    function changeTimer() {
+        if (count >= 255) {
+            clearInterval(timer);
+            R = 255;
+            G = 255;
+            B = 255;
+            count = 0;
+            init();
+        }
+        else {
+            count += 1
+        }
+
+    }
+
+    function btn1_press() {
+        if (R == 255) {
+            if (break_time == true) {
+                clearInterval(timer);
+                R = 235;
+                G = 176;
+                B = 14;
+                document.body.style.background = "rgb(" + [R, G, B].join(",") + ")";
+                break_time = false;
+                countdown();
+            }
+            else if (break_time == false) {
+                clearInterval(timer);
+                R = 79;
+                G = 13;
+                B = 186;
+                document.body.style.background = "rgb(" + [R, G, B].join(",") + ")";
+                break_time = true;
+                countdown();
+            }
+        }
     }
 </script>
