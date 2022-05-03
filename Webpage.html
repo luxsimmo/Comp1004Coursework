@@ -1,0 +1,666 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Comp1004 Study Project</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
+body, html { 
+  height: 100%;
+  color: #777;
+  line-height: 1.8;
+}
+
+/* Create a Parallax Effect */
+.bgimg-1, .bgimg-2, .bgimg-3 {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* First image (Logo. Full height) */
+.bgimg-1 {
+  background-image: url('image1.png');
+  min-height: 100%;
+}
+
+/* Second image (Project) */
+.bgimg-2 {
+  background-image: url("image1.png");
+  min-height: 400px;
+}
+
+/* Third image (Contact) */
+.bgimg-3 {
+  background-image: url("image1.png");
+  min-height: 400px;
+}
+
+.w3-wide {letter-spacing: 10px;}
+.w3-hover-opacity {cursor: pointer;}
+
+/* Turn off parallax scrolling for tablets and phones */
+@media only screen and (max-device-width: 1600px) {
+  .bgimg-1, .bgimg-2, .bgimg-3 {
+    background-attachment: scroll;
+    min-height: 400px;
+  }
+}
+
+/* Slider */
+.slidecontainer {
+  width: 100%;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #79c1d1;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+.info {
+  width: 12em;
+  display: flex;
+  margin-left: 4em;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.selected { 
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: 2px solid rgba(15, 15, 15, 0.2);
+ }
+
+article { 
+  text-align: center;
+}
+
+button {
+  background-color: #b0b0b0;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+}
+
+</style>
+</head>
+<body>
+<article>
+<div class="w3-top">
+  <div class="w3-bar" id="myNavbar">
+    <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <a href="#home" class="w3-bar-item w3-button">HOME</a>
+    <a href="#about" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-user"></i> ABOUT</a>
+    <a href="#project" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i> PROJECT</a>
+    <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right" onclick="document.getElementById('id01').style.display='block'"style="width:auto;">LOGIN</a>
+  </div>
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
+    <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
+    <a href="#project" class="w3-bar-item w3-button" onclick="toggleFunction()">PROJECT</a>
+    <a href="#contact" class="w3-bar-item w3-button" onclick="toggleFunction()">CONTACT</a>
+    <a href="#" class="w3-bar-item w3-button" onclick="document.getElementById('id01').style.display='block'"style="width:auto;">LOGIN</a>
+  </div>
+</div>
+
+<div id="id01" class="modal">
+  
+  <form class="modal-content animate" method="post">
+
+
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input id="uname" type="text" placeholder="Enter Username" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input id="psw" type="text" placeholder="Enter Password" required>
+        
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button class="button" onclick="login_submit_button()">Login</button>
+	<button class="button" onclick="register_button()">Register</button>
+    </div>
+  </form>
+</div>
+
+<div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
+  <div class="w3-display-middle" style="white-space:nowrap;">
+    <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Comp1004 <span class="w3-hide-small">Study</span> Project</span>
+  </div>
+</div>
+
+<div class="w3-content w3-container w3-padding-64" id="about">
+  <h3 class="w3-center">ABOUT MY PROJECT</h3>
+  <p class="w3-center"><em>My project is based on the 'pomodoro study technique'. This takes the idea of doing a length of study then a short break followed by more study</em></p>
+  <div class="w3-row">
+    <div class="w3-col m6 w3-center w3-padding-large">
+      <p><b>How to use my system</b></p><br>
+      <img src="image2.png" class="w3-round w3-image " alt="Image" width="500" height="333">
+    </div>
+
+    <div class="w3-col m6 w3-hide-small w3-padding-large">
+      <p>Welcome to my project webpage</p>
+	<br>
+	<p>To use my system you first input the settings you wish to use for your study. These settings include your total work time for your study session, your break frequency (how often you would want to take a break), your break length (how long you want your breaks to be)</p>
+	<p>Then press study and begin your study session. When the light changes colour to indicate a change in activity, click the appropriate button to let the system know this change has been acknowledged. At any given point take a spontaneous break by clicking the "Spontaneous break" button</p>
+	<p>Finally, be productive and improve your study habits by analyzing session data</p>
+</div>
+  </div>
+  <p class="w3-wide"></i>select your settings</p>
+  <div class="w3-light-grey">
+    <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:100%"></div>
+  </div>
+  <p class="w3-wide"></i>press start</p>
+  <div class="w3-light-grey">
+    <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:100%"></div>
+  </div>
+  <p class="w3-wide"></i>be productive</p>
+  <div class="w3-light-grey">
+    <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:100%"></div>
+  </div>
+</div>
+
+<div class="w3-row w3-center w3-dark-grey w3-padding-16">
+  <div class="w3-quarter w3-section">
+    <span class="w3-xlarge"></span><br>
+  </div>
+  <div class="w3-quarter w3-section">
+    <span class="w3-xlarge"></span><br>
+  </div>
+  <div class="w3-quarter w3-section">
+    <span class="w3-xlarge"></span><br>
+  </div>
+  <div class="w3-quarter w3-section">
+    <span class="w3-xlarge"></span><br>
+  </div>
+</div>
+
+<div class="bgimg-2 w3-display-container w3-opacity-min">
+  <div class="w3-display-middle">
+    <span class="w3-xxlarge w3-text-white w3-wide">PROJECT</span>
+  </div>
+</div>
+
+<div class="w3-content w3-container w3-padding-64" id="project">
+  <h3 class="w3-center">Set your total work time (hours)</h3>
+
+<div class="slidecontainer">
+  <input type="range" min="1" max="12" value="" class="slider" id="Range1">
+  <p>Value: <span id="totaltime"></span></p>
+</div>
+  
+<h3 class="w3-center">Set break frequency (minutes)</h3>
+
+<div class="slidecontainer">
+  <input type="range" min="10" max="30" value="" class="slider" id="Range2">
+  <p>Value: <span id="breakfrequency"></span></p>
+</div>
+
+<h3 class="w3-center">Set break length (minutes)</h3>
+
+<div class="slidecontainer">
+  <input type="range" min="5" max="30" value="" class="slider" id="Range3">
+  <p>Value: <span id="breaklength"></span></p>
+</div>
+
+<button class="button" onclick="start_button()">Start</button>
+
+<button class="button" onclick="spontaneous_button()">Spontaneous Break</button>
+
+<button class="button" onclick="save_button()">Save Settings</button>
+
+</div>
+
+<div id="modal01" class="w3-modal w3-black" onclick="this.style.display='none'">
+  <span class="w3-button w3-large w3-black w3-display-topright" title="Close Modal Image"><i class="fa fa-remove"></i></span>
+  <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+    <img id="img01" class="w3-image">
+    <p id="caption" class="w3-opacity w3-large"></p>
+  </div>
+</div>
+
+<div class="bgimg-3 w3-display-container w3-opacity-min">
+  <div class="w3-display-middle">
+     <span class="w3-xxlarge w3-text-white w3-wide">CONTACT</span>
+  </div>
+</div>
+
+<div class="w3-content w3-container w3-padding-64" id="contact">
+  <h3 class="w3-center">Thank You!</h3>
+  <p class="w3-center"><em>I'd love your feedback!</em></p>
+
+  <div class="w3-row w3-padding-32 w3-section">
+    <div class="w3-col m4 w3-container">
+      <img src="image3.png" class="w3-image w3-round" style="width:50%">
+    </div>
+    <div class="w3-col m8 w3-panel">
+      <div class="w3-large w3-margin-bottom">
+        <i class="fa fa-map-marker fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Plymouth University<br>
+        <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: lux.simmonds@students.plymouth.ac.uk<br>
+      </div>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off">
+  <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
+  <div class="w3-xlarge w3-section">
+  </div>
+  </footer>
+
+</article>
+<script>
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+
+// Change style of navbar on scroll
+window.onscroll = function() {myFunction()};
+function myFunction() {
+    var navbar = document.getElementById("myNavbar");
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        navbar.className = "w3-bar" + " w3-card" + " w3-animate-top" + " w3-white";
+    } else {
+        navbar.className = navbar.className.replace(" w3-card w3-animate-top w3-white", "");
+    }
+}
+
+// Used to toggle the menu on small screens when clicking on the menu button
+function toggleFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+
+//Used for slider
+var slider1 = document.getElementById("Range1");
+var output1 = document.getElementById("totaltime");
+Range1.value = JSON.parse(localStorage.totalslider);
+output1.innerHTML = slider1.value;
+if (localStorage.totalslider == null) localStorage.totalslider = JSON.stringify([]);
+
+slider1.oninput = function() {
+  output1.innerHTML = this.value;
+}
+
+var slider2 = document.getElementById("Range2");
+var output2 = document.getElementById("breakfrequency");
+Range2.value = JSON.parse(localStorage.frequencyslider);
+output2.innerHTML = slider2.value;
+if (localStorage.frequencyslider == null) localStorage.frequencyslider = JSON.stringify([]);
+
+slider2.oninput = function() {
+  output2.innerHTML = this.value;
+}
+
+var slider3 = document.getElementById("Range3");
+var output3 = document.getElementById("breaklength");
+Range3.value = JSON.parse(localStorage.breaklengthslider);
+output3.innerHTML = slider3.value;
+if (localStorage.breaklengthslider == null) localStorage.breaklengthslider = JSON.stringify([]);
+
+slider3.oninput = function() {
+  output3.innerHTML = this.value;
+}
+
+//Used for button functions
+var until_end = 0;
+var break_time = false;
+var timer = 0;
+var count = 0;
+var break_number = 0;
+var counter = 0;
+
+function countdown(){ 
+  if (count == 0){ 
+	timer = setInterval(light_indicate, until_end);
+	count = 1;
+  } else { 
+	clearInterval(timer);
+	timer = setInterval(light_indicate, until_end);
+  }
+}
+
+function start_button(){
+  if (counter == 0){
+	system_end = (slider1.value * 3600000);
+	main_time = setInterval(light_end, system_end);
+	counter = 1;
+  } 
+  if (break_time == true){
+	break_number += 1;
+	light_break();
+	break_time = false;
+	if (break_number == 5){
+  	  until_end = (slider3.value * 120000);
+	  break_number = 0;
+	} else { 
+	  until_end = (slider3.value * 60000);
+	}
+  	countdown();
+  } else if (break_time == false){
+		light_work();
+		break_time = true;
+		until_end = (slider2.value * 60000);
+		countdown();
+  }
+}
+
+function spontaneous_button(){
+  break_number += 1;
+  light_break();
+  break_time = false;
+  if (break_number == 5){
+	until_end = (slider3.value * 120000);
+	break_number = 0;
+  } else { 
+	until_end = (slider3.value * 60000);
+  }
+  countdown();
+}
+
+function light_work(){
+	var url = "http://10.208.61.74:5050/api/stlaB2I6VZ8O80Qepc-1xfmLrHgyTFvB9IGupaQz/lights/1/state";
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("PUT", url);
+
+	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.setRequestHeader("Content-Length", "0");
+
+	xhr.onreadystatechange = function () {
+   	if (xhr.readyState === 4) {
+      	console.log(xhr.status);
+      	console.log(xhr.responseText);
+   	}};
+	
+	var data = '{"on": true, "bri":245, "xy" : [0.2000,0.0200]}';
+	
+	xhr.send(data);
+}
+
+function light_break(){
+	var url = "http://10.208.61.74:5050/api/stlaB2I6VZ8O80Qepc-1xfmLrHgyTFvB9IGupaQz/lights/1/state";
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("PUT", url);
+
+	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.setRequestHeader("Content-Length", "0");
+
+	xhr.onreadystatechange = function () {
+   	if (xhr.readyState === 4) {
+      	console.log(xhr.status);
+      	console.log(xhr.responseText);
+   	}};
+	
+	var data = '{"on": true, "bri":245, "xy" : [0.9000,0.9000]}';
+	
+	xhr.send(data);
+}
+
+function light_indicate(){
+	var url = "http://10.208.61.74:5050/api/stlaB2I6VZ8O80Qepc-1xfmLrHgyTFvB9IGupaQz/lights/1/state";
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("PUT", url);
+
+	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.setRequestHeader("Content-Length", "0");
+
+	xhr.onreadystatechange = function () {
+   	if (xhr.readyState === 4) {
+      	console.log(xhr.status);
+      	console.log(xhr.responseText);
+   	}};
+	
+	var data = '{"on": true, "bri":245, "xy" : [0.9,0.1]}';
+	
+	xhr.send(data);
+}
+
+function light_end(){
+  clearInterval(timer);
+  clearInterval(main_time);
+  until_end = 0;
+  break_time = false;
+  timer = 0;
+  count = 0;
+  break_number = 0;
+  counter = 0;
+
+  var url = "http://10.208.61.74:5050/api/stlaB2I6VZ8O80Qepc-1xfmLrHgyTFvB9IGupaQz/lights/1/state";
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("PUT", url);
+
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("Content-Length", "0");
+
+  xhr.onreadystatechange = function () {
+  if (xhr.readyState === 4) {
+	console.log(xhr.status);
+	console.log(xhr.responseText);
+  }};
+	
+  var data = '{"on": true, "bri":245, "xy" : [0.25,0.25]}';
+	
+  xhr.send(data);
+}
+
+//Save Button for JSON
+function save_button(){ 
+  var total_ = [Range1.value];
+  var frequency_ = [Range2.value];
+  var break_ = [Range3.value];
+
+  localStorage.totalslider = JSON.stringify(total_);
+  localStorage.frequencyslider = JSON.stringify(frequency_);
+  localStorage.breaklengthslider = JSON.stringify(break_);
+
+  slider1Value = JSON.parse(localStorage.totalslider);
+  slider2Value = JSON.parse(localStorage.frequencyslider);
+  slider3Value = JSON.parse(localStorage.breaklengthslider);
+
+}
+
+//Login Page
+function register_button(){
+	var storedUsernames = JSON.parse(localStorage.getItem("usernames"));
+	var storedPasswords = JSON.parse(localStorage.getItem("passwords"));
+
+	var theInput1 = document.querySelector("#uname").value;
+	var theInput2 = document.querySelector("#psw").value;
+
+	storedUsernames.push(theInput1);
+	storedPasswords.push(theInput2);
+
+	localStorage.setItem("usernames", JSON.stringify(storedUsernames));
+	localStorage.setItem("passwords", JSON.stringify(storedPasswords));
+}
+
+function login_submit_button(){
+	var storedUsernames = JSON.parse(localStorage.getItem("usernames"));
+	var storedPasswords = JSON.parse(localStorage.getItem("passwords"));
+	var usernameInput = document.querySelector("#uname").value;
+	var passwordInput = document.querySelector("#psw").value;
+	var loggedon = False;
+
+	for (let i = 0; i <= (storedUsernames.length); i++){
+		if (usernameInput == storedUsernames[i]){
+			if (passwordInput == storedPasswords[i]){
+				i = (storedUsernames.length) + 1;
+				loggedon = True;
+			} else {
+				i = (storedUsernames.length) + 1;
+				window.alert("Incorrect Password, please try again");
+			}
+		}
+	}
+	if (loggedon == True){
+		window.alert("WELCOME");
+	} else {
+		window.alert("Incorrect Login details, please try again");
+	}
+}
+
+
+</script>
+
+</body>
+</html>
